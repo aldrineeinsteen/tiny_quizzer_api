@@ -19,6 +19,7 @@ public class DevDataLoader implements CommandLineRunner {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
 

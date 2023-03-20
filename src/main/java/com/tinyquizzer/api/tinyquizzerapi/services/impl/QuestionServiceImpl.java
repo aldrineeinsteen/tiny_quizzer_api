@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
     @Override
@@ -17,7 +18,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Optional<Question> findById(UUID id) {
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -28,10 +29,5 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void deleteById(UUID id) {
 
-    }
-
-    @Override
-    public Question update(UUID id, Question questionDetails) {
-        return null;
     }
 }

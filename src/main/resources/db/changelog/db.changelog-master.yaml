@@ -1,7 +1,7 @@
 databaseChangeLog:
-#  instead of including all - to create an order
-#  - includeAll:
-#      path: classpath*:db/changelog/changes/
+  #  instead of including all - to create an order
+  #  - includeAll:
+  #      path: classpath*:db/changelog/changes/
   - include:
       file: db/changelog/changes/create-questions-table.yaml
   - include:

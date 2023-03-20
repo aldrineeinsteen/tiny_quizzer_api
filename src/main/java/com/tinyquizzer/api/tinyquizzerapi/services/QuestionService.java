@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public interface QuestionService {
 
@@ -18,5 +19,4 @@ public interface QuestionService {
 
     void deleteById(UUID id);
 
-    Question update(UUID id, Question questionDetails);
 }

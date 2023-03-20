@@ -1,6 +1,7 @@
 # TinyQuizzer API
 
-TinyQuizzer is an online quiz platform that offers engaging and competitive math quizzes for kids. This repository contains the API code for TinyQuizzer, built with Java and Spring Boot.
+TinyQuizzer is an online quiz platform that offers engaging and competitive math quizzes for kids. This repository
+contains the API code for TinyQuizzer, built with Java and Spring Boot.
 
 ## Features
 
@@ -22,11 +23,13 @@ Detailed instructions for setting up and running the TinyQuizzer API locally can
 
 ## Deployment on AWS
 
-Instructions for deploying the TinyQuizzer API to AWS (using services like EC2, Lambda, or ECS) can also be found in the `docs/` directory.
+Instructions for deploying the TinyQuizzer API to AWS (using services like EC2, Lambda, or ECS) can also be found in
+the `docs/` directory.
 
 ## Contributing
 
-If you would like to contribute to the TinyQuizzer API project, please read our CONTRIBUTING.md guidelines and submit a pull request.
+If you would like to contribute to the TinyQuizzer API project, please read our CONTRIBUTING.md guidelines and submit a
+pull request.
 
 ## License
 

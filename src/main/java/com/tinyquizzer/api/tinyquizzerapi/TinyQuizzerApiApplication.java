@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TinyQuizzerApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TinyQuizzerApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TinyQuizzerApiApplication.class, args);
+    }
 
 }
