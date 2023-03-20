@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-categories-table
-      author: yourname
+      author: aldrine.einsteen@hotmail.com
       changes:
         - createTable:
             tableName: categories
@@ -21,7 +21,7 @@ databaseChangeLog:
 
   - changeSet:
       id: create-questions-table
-      author: yourname
+      author: aldrine.einsteen@hotmail.com
       changes:
         - createTable:
             tableName: questions
