@@ -1,5 +1,25 @@
 databaseChangeLog:
   - changeSet:
+      id: create-categories-table
+      author: yourname
+      changes:
+        - createTable:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+  - changeSet:
       id: create-questions-table
       author: yourname
       changes:
@@ -14,6 +34,38 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: question_text
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_question_category
+                    references: categories(id)
+              - column:
+                  name: complexity
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: choice_a
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: choice_b
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: choice_c
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: choice_d
                   type: varchar(255)
                   constraints:
                     nullable: false
