@@ -1,73 +1,72 @@
 package com.tinyquizzer.api.tinyquizzerapi.security.config;
 
+import com.tinyquizzer.api.tinyquizzerapi.security.JwtAuthenticationFilter;
+import com.tinyquizzer.api.tinyquizzerapi.security.util.JwtUtil;
+import com.tinyquizzer.api.tinyquizzerapi.services.UserService;
+import com.tinyquizzer.api.tinyquizzerapi.services.impl.CustomUserDetailsService;
+import com.tinyquizzer.api.tinyquizzerapi.services.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-//    @Autowired
-//    UserDetailsService userDetailsService;
+    @Autowired
+    private UserService userService;
+
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
+
+    public SecurityConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil) {
+        this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests((requests) -> requests
-                                //.requestMatchers("/api/v1/**").authenticated()
-                                //.requestMatchers(HttpMethod.POST, "/api/v1/categories").hasRole("ROLE_ADMIN")
-                                //.requestMatchers(HttpMethod.DELETE, "/api/v1/questions/**").hasRole("ROLE_ADMIN")
-                                //.requestMatchers(HttpMethod.PUT, "/api/v1/questions/**").hasRole("ROLE_ADMIN")
-                                //.requestMatchers(HttpMethod.POST, "/api/v1/questions").hasRole("ROLE_ADMIN")
-                                //.requestMatchers(HttpMethod.DELETE, "/api/v1/questions/**").hasRole("ROLE_ADMIN")
-                                //.requestMatchers(HttpMethod.PUT, "/api/v1/questions/**").hasRole("ROLE_ADMIN")
-                                .requestMatchers("/api/v1/**").authenticated()
-                        //.anyRequest().permitAll()
-                )
-                .formLogin()
+        http
+                .cors()
                 .and()
-                .httpBasic()
+                .csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                .anyRequest().authenticated()
+                // Add additional matchers if needed
+//                .and()
+//                .formLogin()
                 .and()
-                .csrf().disable();
+                .httpBasic();
         return http.build();
     }
 
-/*    @Bean
-    @Profile("dev")
-    public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user")
-                .password(bCryptPasswordEncoder.encode("userPass"))
-                .roles("ROLE_USER")
-                .build());
-        manager.createUser(User.withUsername("admin")
-                .password(bCryptPasswordEncoder.encode("adminPass"))
-                .roles("ROLE_USER", "ROLE_ADMIN")
-                .build());
-        return manager;
-    }*/
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailService)
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailService)
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .build();
-    }
 }
-

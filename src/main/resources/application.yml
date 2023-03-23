@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: dev
+jwt:
+  secret: 9879hada8s7d8as7dhasiodh
+  expiration: 86400000
